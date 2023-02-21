@@ -34,6 +34,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CandidateListComponent } from './candidate-list/candidate-list.component';
 import { CanDeactivateGuardService } from './can-deactivate-guard.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DashboardService } from './services/dashboard.service';
 
 
 @NgModule({
@@ -61,7 +62,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   providers: [CandidateService, SOWService, CandidatemappingService, DomainService, TechnologyService, StatusserviceService,
     LocationserviceService, RegionserviceService, UsttpmserviceService, UstpocserviceService, DellmanagerserviceService, RegionserviceService,
-    AccountserviceService, LoginService, AuthGuard,CommonService,ExcelService,CanDeactivateGuardService],
+    AccountserviceService, LoginService, AuthGuard,CommonService,ExcelService,CanDeactivateGuardService,DashboardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
