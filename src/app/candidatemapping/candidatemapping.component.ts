@@ -15,6 +15,7 @@ import { StatusserviceService } from '../services/statusservice.service';
   templateUrl: './candidatemapping.component.html',
   styleUrls: ['./candidatemapping.component.css']
 })
+
 export class CandidatemappingComponent implements OnInit {
   rowCount: any;
   batchFilteredRecord: any;
@@ -23,8 +24,8 @@ export class CandidatemappingComponent implements OnInit {
 
   constructor(private service: CandidatemappingService, private candidateService: CandidateService, private sowService: SOWService,
     private statusService: StatusserviceService, private excelService: ExcelService, private login: LoginService) {
-    this.isAuthor = this.login.isAuthor;
   }
+
   isAuthor: boolean = false;
   MappingsList: any = [];
   submitted: boolean = false;
@@ -37,11 +38,12 @@ export class CandidatemappingComponent implements OnInit {
   pageSizeSelected: number = 10;
   batchRecord: any = [];
   resultloader: boolean = false;
-  SOData:SOModel[]=[];
-  CandidateData:CandidateModel[]=[];
-  StatusData:StatusModel[]=[];
+  SOData: SOModel[] = [];
+  CandidateData: CandidateModel[] = [];
+  StatusData: StatusModel[] = [];
 
   async ngOnInit() {
+    this.isAuthor=JSON.parse(sessionStorage.getItem('author'));
     await this.GetDropdown1();
     await this.GetDropdown2();
     await this.GetDropdown3();
@@ -52,8 +54,7 @@ export class CandidatemappingComponent implements OnInit {
     this.resultloader = true;
     this.service.GetAllCandidateMappingData().subscribe(res => {
       this.MappingsList = res;
-      console.log(res)
-      this.rowCount=this.MappingsList.length;
+      this.rowCount = this.MappingsList.length;
       this.MappingData = [];
       this.MappingData = res;
       this.resultloader = false;
@@ -65,24 +66,27 @@ export class CandidatemappingComponent implements OnInit {
     })
     //await this.GetSOCandidateDetails(); 
   }
-  GetDropdown1(){
-    return new Promise((res,rej)=>{
+
+  GetDropdown1() {
+    return new Promise((res, rej) => {
       this.sowService.GetAllSowData().subscribe(data => {
         this.SOData = data;
         res('')
       })
     })
   }
-  GetDropdown2(){
-    return new Promise((res,rej)=>{
+
+  GetDropdown2() {
+    return new Promise((res, rej) => {
       this.candidateService.GetAllCandidatesData().subscribe(data => {
         this.CandidateData = data;
         res('')
       })
     })
   }
-  GetDropdown3(){
-    return new Promise((res,rej)=>{
+
+  GetDropdown3() {
+    return new Promise((res, rej) => {
       this.statusService.GetAllStatusData().subscribe(data => {
         this.StatusData = data;
         res('')
@@ -153,7 +157,6 @@ export class CandidatemappingComponent implements OnInit {
   }
 
   editDetails(data: any) {
-    console.log(data)
     this.editmode = true;
     this.Id = data.soW_CandidateId;
     this.mapppingForm.patchValue({
@@ -165,7 +168,6 @@ export class CandidatemappingComponent implements OnInit {
 
   onAdd() {
     let formValue = this.mapppingForm.value;
-    console.log(formValue)
     let obj = {
       sowId: formValue.sowId,
       candidateId: formValue.candidateId,
@@ -173,7 +175,6 @@ export class CandidatemappingComponent implements OnInit {
       type: "post",
     };
     this.service.PostCandidateMappingData(obj).subscribe(data => {
-      console.log(data);
       alert("Candidate Added Successfully");
       this.mapppingForm.reset();
       this.GetMappingsData();
@@ -196,7 +197,7 @@ export class CandidatemappingComponent implements OnInit {
   }
 
   getSOName(id: any) {
-    if (this.SOData!=null && id != "") {
+    if (this.SOData != null && id != "") {
       var obj: any;
       this.SOData.find((x: any) => {
         if (x.sowId == id) {
@@ -205,11 +206,10 @@ export class CandidatemappingComponent implements OnInit {
       })
       return obj.soName;
     }
-
   }
 
   getCandidateName(id: any) {
-    if (this.CandidateData!=null && id != "") {
+    if (this.CandidateData != null && id != "") {
       var obj: any;
       this.CandidateData.find((x: any) => {
         if (x.candidateId == id) {
@@ -218,11 +218,10 @@ export class CandidatemappingComponent implements OnInit {
       })
       return obj.candidateName;
     }
-
   }
 
   getStatus(id: any) {
-    if (this.StatusData!=null && id != "") {
+    if (this.StatusData != null && id != "") {
       var obj: any;
       this.StatusData.find((x: any) => {
         if (x.statusId == id) {
@@ -231,12 +230,10 @@ export class CandidatemappingComponent implements OnInit {
       })
       return obj.statusName;
     }
-
   }
 
   download() {
     this.downloadObject = this.createObject(this.MappingData)
-    console.log(this.MappingData)
     let headers = [['SO Candidate Id', 'SO Name', 'Candidate Name', 'Status']]
     this.excelService.jsonExportAsExcel(this.downloadObject, "SOCandidate Mapping", headers);
   }
@@ -248,21 +245,18 @@ export class CandidatemappingComponent implements OnInit {
   }
 
   GetSOCandidateDetails() {
-    //debugger;
-      if (this.MappingsList != undefined || this.MappingsList != null) {
-        this.MappingData = [];
-        this.MappingsList.forEach(element => {
-          let obj = {
-            soW_CandidateId: element.soW_CandidateId,
-            sowName: this.getSOName(element.sowId),
-            candidateName: this.getCandidateName(element.candidateId),
-            status: this.getStatus(element.statusId)
-          }
-          this.MappingData.push(obj);
-        })
-        console.log(this.MappingData)
-      }
-
+    if (this.MappingsList != undefined || this.MappingsList != null) {
+      this.MappingData = [];
+      this.MappingsList.forEach(element => {
+        let obj = {
+          soW_CandidateId: element.soW_CandidateId,
+          sowName: this.getSOName(element.sowId),
+          candidateName: this.getCandidateName(element.candidateId),
+          status: this.getStatus(element.statusId)
+        }
+        this.MappingData.push(obj);
+      })
+    }
   }
 
   OnPreviousClicked() {
@@ -278,6 +272,7 @@ export class CandidatemappingComponent implements OnInit {
 
     this.batchRecord = this.MappingData.slice(startIndex, endIndex);
   }
+
   OnNextClicked() {
     let startIndex: number = 0;
     let endIndex: number = 0;
@@ -312,6 +307,7 @@ export class CandidatemappingComponent implements OnInit {
 
     this.batchRecord = this.MappingData.slice(startIndex, endIndex);
   }
+
   SetDefaultPagination() {
     let indexCounter: number = this.currentPage - 1;
 
@@ -331,6 +327,7 @@ export class CandidatemappingComponent implements OnInit {
       this.batchRecord = this.batchFilteredRecord.slice(startIndex, endIndex);
     }
   }
+
   searchFilter() {
     if (this.searchText.trim() == "") {
       this.SetDefaultPaginationForcly(this.MappingData)
@@ -341,19 +338,15 @@ export class CandidatemappingComponent implements OnInit {
       this.isBatchSearch = true;
       this.MappingData.forEach(data => {
         for (let t of Object.keys(data)) {
-          console.log(t)
-          if (!(data[t] == null || data[t]  == undefined)) {
-
+          if (!(data[t] == null || data[t] == undefined)) {
             if (data[t].toString().toLowerCase().includes(this.searchText.toLowerCase())) {
               this.batchRecord.push(data);
-              
+
               break;
             }
-           
           }
         }
-          this.SetDefaultPaginationForcly(this.batchRecord)
-        
+        this.SetDefaultPaginationForcly(this.batchRecord)
       });
     } else {
       this.batchRecord = [];

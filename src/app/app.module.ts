@@ -50,7 +50,7 @@ import { DashboardService } from './services/dashboard.service';
     DashboardComponent,
     SoListComponent,
     CandidateListComponent,
-    
+
   ],
   imports: [
     BrowserModule,
@@ -62,7 +62,8 @@ import { DashboardService } from './services/dashboard.service';
   ],
   providers: [CandidateService, SOWService, CandidatemappingService, DomainService, TechnologyService, StatusserviceService,
     LocationserviceService, RegionserviceService, UsttpmserviceService, UstpocserviceService, DellmanagerserviceService, RegionserviceService,
-    AccountserviceService, LoginService, AuthGuard,CommonService,ExcelService,CanDeactivateGuardService,DashboardService],
+    AccountserviceService, LoginService, AuthGuard, CommonService, ExcelService, CanDeactivateGuardService, DashboardService],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

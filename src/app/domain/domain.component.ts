@@ -9,53 +9,67 @@ import { LoginService } from '../services/login.service';
   templateUrl: './domain.component.html',
   styleUrls: ['./domain.component.css']
 })
+
 export class DomainComponent implements OnInit {
-  DomainList:any=[];
-  submitted:boolean=false;
-  editmode:boolean=false;
-  Id:any=null;
-  downloadObject:any;
-  DomainData:any=[];
-  pageSizeSelected:number=10;
-  currentPage:number=1;
-  batchRecord:any=[];
-  totalPages:number=0;
-  resultloader:boolean=false;
-  isAuthor:boolean=false;
+  DomainList: any = [];
+  submitted: boolean = false;
+  editmode: boolean = false;
+  Id: any = null;
+  downloadObject: any;
+  DomainData: any = [];
+  pageSizeSelected: number = 10;
+  currentPage: number = 1;
+  batchRecord: any = [];
+  totalPages: number = 0;
+  resultloader: boolean = false;
+  isAuthor: boolean = false;
   isBatchSearch: boolean;
   searchText: any;
   batchFilteredRecord: any;
-  constructor(private service:DomainService,private excelService:ExcelService,private loginservice:LoginService) {
-    this.isAuthor=this.loginservice.isAuthor;
-   }
+  constructor(private service: DomainService, private excelService: ExcelService, private loginservice: LoginService) {
+    //this.isAuthor = this.loginservice.isAuthor;
+  }
 
   ngOnInit(): void {
+    this.isAuthor=JSON.parse(sessionStorage.getItem('author'));
     this.GetAllDomainData();
   }
-  get f(){ return this.domainForm.controls;}
-  domainForm=new FormGroup({
-    domainName:new FormControl('',[Validators.required])
+
+  get f() { return this.domainForm.controls; }
+
+  domainForm = new FormGroup({
+    domainName: new FormControl('', [Validators.required])
   })
 
-  GetAllDomainData(){
-    this.resultloader=true;
-    this.service.GetAllDomainData().subscribe(data=>{
-      this.DomainList=data;
-      this.resultloader=false;
-      this.totalPages=Math.ceil(this.DomainList.length/this.pageSizeSelected);
+  GetAllDomainData() {
+    this.resultloader = true;
+    this.service.GetAllDomainData().subscribe(data => {
+      this.DomainList = data;
+      this.resultloader = false;
+      this.totalPages = Math.ceil(this.DomainList.length / this.pageSizeSelected);
       this.GetDomainDetails();
       this.SetDefaultPagination();
-    },err=>{
+    }, err => {
       console.log(err)
     })
   }
 
   onSubmit() {
-    console.log(this.domainForm.value);
     this.submitted = true;
+
     if (this.domainForm.invalid) {
       return;
     }
+
+    let formValue = this.domainForm.value;
+    if (formValue != null) {
+      let domainName = formValue.domainName;
+      var result = this.DomainList.find(item => item.domainName.trim().toLowerCase() === domainName.trim().toLowerCase());
+      if (result != null) {
+        return alert('Duplicate record -"' + domainName + '" already exists');
+      }
+    }
+
     if (this.editmode) {
       this.onEdit();
     }
@@ -64,26 +78,27 @@ export class DomainComponent implements OnInit {
     }
   }
 
-  onEdit(){
-    let formValue=this.domainForm.value;
-    let obj={
-      domainId:this.Id,
-      domainName:formValue.domainName,
-      type:'update'
+  onEdit() {
+    let formValue = this.domainForm.value;
+    let obj = {
+      domainId: this.Id,
+      domainName: formValue.domainName,
+      type: 'update'
     };
-    this.service.UpdateDomainData(this.Id,obj).subscribe(res=>{
+    this.service.UpdateDomainData(this.Id, obj).subscribe(res => {
       alert('Data updated successfully');
       this.domainForm.reset();
       this.GetAllDomainData();
-      this.editmode=false;
-      this.Id=null;
-    },err=>{
-      console.log(err);
-      this.editmode=false;
-      this.Id=null
+      this.editmode = false;
+      this.Id = null;
+    }, err => {
+      ;
+      this.editmode = false;
+      this.Id = null
     })
   }
-  onAdd(){
+
+  onAdd() {
     let formValue = this.domainForm.value;
 
     let obj = {
@@ -91,41 +106,42 @@ export class DomainComponent implements OnInit {
       type: "post",
     };
     this.service.PostDomainData(obj).subscribe(data => {
-      console.log(data);
       alert("Domain Added Successfully");
       this.domainForm.reset();
       this.GetAllDomainData();
     })
   }
-  editDetails(data:any){
-    this.editmode=true;
-    this.Id=data.domainId;
+
+  editDetails(data: any) {
+    this.editmode = true;
+    this.Id = data.domainId;
     this.domainForm.patchValue({
       domainName: data.domainName,
     })
   }
 
-  download(){
-    this.downloadObject=this.createObject(this.DomainData)
-    console.log(this.DomainData)
-    let headers=[['Domain Id','Domain Name']]
-    this.excelService.jsonExportAsExcel(this.downloadObject,"Domain Details",headers);
-  }
-  createObject(data){
-    return {
-      'Domain Data':data,
-    }     
+  download() {
+    this.downloadObject = this.createObject(this.DomainData)
+    let headers = [['Domain Id', 'Domain Name']]
+    this.excelService.jsonExportAsExcel(this.downloadObject, "Domain Details", headers);
   }
 
-  GetDomainDetails(){
+  createObject(data) {
+    return {
+      'Domain Data': data,
+    }
+  }
+
+  GetDomainDetails() {
     this.DomainList.forEach(element => {
-      let obj={
-        domainId:element.domainId,
-      domainName:element.domainName,
+      let obj = {
+        domainId: element.domainId,
+        domainName: element.domainName,
       }
       this.DomainData.push(obj);
     })
   }
+
   // deleteDetails(domain:any){
   //   this.Id=domain.domainId;
   //   var decision=confirm('Are you sure you want to delete?');
@@ -154,6 +170,7 @@ export class DomainComponent implements OnInit {
 
     this.batchRecord = this.DomainList.slice(startIndex, endIndex);
   }
+
   OnNextClicked() {
     let startIndex: number = 0;
     let endIndex: number = 0;
@@ -188,6 +205,7 @@ export class DomainComponent implements OnInit {
 
     this.batchRecord = this.DomainList.slice(startIndex, endIndex);
   }
+
   SetDefaultPagination() {
     let indexCounter: number = this.currentPage - 1;
     let startIndex: number = indexCounter * Number(this.pageSizeSelected);
@@ -196,6 +214,7 @@ export class DomainComponent implements OnInit {
       this.batchRecord = this.DomainList.slice(startIndex, endIndex);
     }
   }
+
   SetDefaultPaginationForcly(data: any) {
     this.batchFilteredRecord = data;
     let indexCounter: number = this.currentPage - 1;
@@ -206,8 +225,8 @@ export class DomainComponent implements OnInit {
       this.batchRecord = this.batchFilteredRecord.slice(startIndex, endIndex);
     }
   }
+
   searchFilter() {
-    debugger;
     if (this.searchText.trim() == "") {
       this.SetDefaultPaginationForcly(this.DomainList)
     }
@@ -217,19 +236,14 @@ export class DomainComponent implements OnInit {
       this.isBatchSearch = true;
       this.DomainList.forEach(data => {
         for (let t of Object.keys(data)) {
-          console.log(t)
-          if (!(data[t] == null || data[t]  == undefined)) {
-
+          if (!(data[t] == null || data[t] == undefined)) {
             if (data[t].toString().toLowerCase().includes(this.searchText.toLowerCase())) {
               this.batchRecord.push(data);
-              
               break;
             }
-           
           }
         }
-          this.SetDefaultPaginationForcly(this.batchRecord)
-        
+        this.SetDefaultPaginationForcly(this.batchRecord)
       });
     } else {
       this.batchRecord = [];

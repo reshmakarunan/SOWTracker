@@ -3,8 +3,8 @@
 </div>
 <div class="container" style="margin-top:20px">
     <h2>SOCandidate Mapping</h2>
-    
-    <div class="container">    
+
+    <div class="container">
         <form [formGroup]="mapppingForm" (ngSubmit)="onSubmit()">
             <div class="row">
                 <div class="col-25">
@@ -58,16 +58,16 @@
     </div>
     <div class="container">
         <div style="flex-grow: 1; text-align: right; margin-bottom: 10px; display: inline;">
-              <input style="width:200px;height:30px;margin-right: 10px; margin-left:65%;" type="text" maxlength="256"
-              [(ngModel)]="searchText" (keyup)="searchFilter()" placeholder="Search by any column">
-             <button (click)="download();" title="Download to Excel">
-             <img src="../../assets/icons/download.png" class="icons" alt="Download">
+            <input style="width:200px;height:30px;margin-right: 10px; margin-left:65%;" type="text" maxlength="256"
+                [(ngModel)]="searchText" (keyup)="searchFilter()" placeholder="Search by any column">
+            <button (click)="download();" title="Download to Excel">
+                <img src="../../assets/icons/download.png" class="icons" alt="Download">
             </button>
         </div>
         <div class="row tbl-fixed">
-           
+
             <div style="flex-grow: 1; text-align: left; margin-bottom: 10px;">
-                
+
             </div>
             <table class="table table-fixed" *ngIf="isAuthor">
                 <thead>
@@ -81,21 +81,23 @@
                         <td style="border: 1px solid;">{{map.soName}}</td>
                         <td style="border: 1px solid;">
                             {{map.candidateName}}</td>
-                            <td style="border: 1px solid;">{{map.statusName}}</td>
+                        <td style="border: 1px solid;">{{map.statusName}}</td>
                         <td style="border: 1px solid;">
-                            <button
-                                (click)="editDetails(map)"><img src="../../assets/icons/edit.ico" 
+                            <button (click)="editDetails(map)"><img src="../../assets/icons/edit.ico"
                                     class="icons"></button> &nbsp;
-                                    <button (click)="deleteDetails(map)"><img
-                                    src="../../assets/icons/delete.png"  class="icons" /></button>
-                           </td>
+                            <button (click)="deleteDetails(map)"><img src="../../assets/icons/delete.png"
+                                    class="icons" /></button>
+                        </td>
                     </tr>
-                </tbody><tbody *ngIf="MappingData">
-                     <tr *ngFor="let map of batchRecord">
-                          <td
-                            style="border: 1px solid;">{{map.soName}}</td> <td style="border: 1px solid;">
-                            {{map.candidateName}}</td> <td style="border: 1px solid;">{{map.statusName}}</td>
-                         </tr> </tbody>
+                </tbody>
+                <tbody *ngIf="MappingData">
+                    <tr *ngFor="let map of batchRecord">
+                        <td style="border: 1px solid;">{{map.soName}}</td>
+                        <td style="border: 1px solid;">
+                            {{map.candidateName}}</td>
+                        <td style="border: 1px solid;">{{map.statusName}}</td>
+                    </tr>
+                </tbody>
             </table>
             <table class="table table-fixed" *ngIf="!isAuthor">
                 <thead>
@@ -111,23 +113,24 @@
                     </tr>
                 </tbody>
             </table>
-            
+
         </div>
         <p>Row Count:{{rowCount}}</p>
         <div class="row justify-content-center" style="margin-top: 10px;">
             <nav>
                 <ul class="pagination justify-content-center">
-                    <li class="page-item"><button class="btn btn-info" 
-                       (click)="OnPreviousClicked()" [disabled]="!(currentPage > 1)">Previous</button></li>
+                    <li class="page-item"><button class="btn btn-info" (click)="OnPreviousClicked()"
+                            [disabled]="!(currentPage > 1)">Previous</button></li>
                     <li class="page-item active">
                         <label style="margin-left:10px">Page</label>
-                        <input type="number"
-                            style="width: 2.2rem; height: 1.9rem;margin-right: 5px;" value="{{currentPage}}" (change)="OnPageNumberChanged($event)">
+                        <input type="number" style="width: 2.2rem; height: 1.9rem;margin-right: 5px;"
+                            value="{{currentPage}}" (change)="OnPageNumberChanged($event)">
                         <label>of
                             {{totalPages}}
                         </label>
                     </li>
-                    <li class="page-item"><button class="btn btn-info" (click)="OnNextClicked()" [disabled]="(currentPage == totalPages)">Next</button></li>
+                    <li class="page-item"><button class="btn btn-info" (click)="OnNextClicked()"
+                            [disabled]="(currentPage == totalPages)">Next</button></li>
                 </ul>
             </nav>
         </div>
