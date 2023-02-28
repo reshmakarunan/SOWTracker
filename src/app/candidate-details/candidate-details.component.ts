@@ -57,7 +57,7 @@ export class CandidateDetailsComponent implements OnInit {
   })
 
   ngOnInit(): void {
-    this.isAuthor=JSON.parse(sessionStorage.getItem('author'));
+    this.isAuthor = JSON.parse(sessionStorage.getItem('author'));
     this.GetCandidateData();
   }
 

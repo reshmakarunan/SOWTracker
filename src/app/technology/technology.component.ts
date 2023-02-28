@@ -28,12 +28,13 @@ export class TechnologyComponent implements OnInit {
   searchText: any;
   isBatchSearch: boolean;
   batchFilteredRecord: any;
+  rowCount: Number;
 
   constructor(private service: TechnologyService, private domainService: DomainService, private excelService: ExcelService, private login: LoginService) {
   }
 
   async ngOnInit() {
-    this.isAuthor=JSON.parse(sessionStorage.getItem('author'));
+    this.isAuthor = JSON.parse(sessionStorage.getItem('author'));
     await this.populateDropdowns();
     this.GetAllTechData();
   }
@@ -47,6 +48,7 @@ export class TechnologyComponent implements OnInit {
   GetAllTechData() {
     this.service.GetAllTechData().subscribe(data => {
       this.TechList = data;
+      this.rowCount = this.TechList.length;
       this.GetTechDetails();
       this.totalPages = Math.ceil(this.TechList.length / this.pageSizeSelected)
       this.SetDefaultPagination();
@@ -74,15 +76,15 @@ export class TechnologyComponent implements OnInit {
     let formValue = this.techForm.value;
     if (formValue != null) {
       let technologyName = formValue.technologyName;
-      let domainId= formValue.domainId;
+      let domainId = formValue.domainId;
 
       var result = this.TechList.find(item => item.technologyName.trim().toLowerCase() === technologyName.trim().toLowerCase()
-                  && item.domainId.toString() === domainId );
+        && item.domainId.toString() === domainId);
       if (result != null) {
         return alert('Duplicate record -"' + technologyName + '" already exists');
       }
     }
-   
+
     if (this.editmode) {
       this.onEdit();
     }
@@ -266,20 +268,20 @@ export class TechnologyComponent implements OnInit {
       this.isBatchSearch = true;
       this.batchRecord = [];
       this.isBatchSearch = true;
-    
+
       this.TechData.forEach(data => {
         for (let t of Object.keys(data)) {
           console.log(t)
-          if (!(data[t] == null || data[t]  == undefined)) {
+          if (!(data[t] == null || data[t] == undefined)) {
 
             if (data[t].toString().toLowerCase().includes(this.searchText.toLowerCase())) {
               this.batchRecord.push(data);
-              
+
               break;
             }
           }
         }
-          this.SetDefaultPaginationForcly(this.batchRecord)
+        this.SetDefaultPaginationForcly(this.batchRecord)
       });
     } else {
       this.batchRecord = [];

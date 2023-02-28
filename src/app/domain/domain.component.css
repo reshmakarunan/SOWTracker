@@ -23,14 +23,19 @@ input[type=text],
 select,
 textarea {
   width: 100%;
-  padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
   resize: vertical;
+  height: 40px;
+  padding: 1px 1px 1px 1px ;
 }
 
+select{
+  height: 40px;
+  padding: 1px 1px 1px 1px ;
+}
 label {
-  padding: 12px 12px 12px 0;
+  /* padding: 12px 12px 12px 0; */
   display: inline-block;
 }
 
@@ -47,7 +52,7 @@ button[type=submit] {
 .container {
   border-radius: 5px;
   background-color: #f2f2f2;
-  padding: 20px;
+  padding: 10px;
 }
 
 .col-25 {
@@ -94,8 +99,9 @@ button[type=submit] {
 }
 
 table {
-  min-width: min-content;
+  min-width: max-content;
   border-collapse: separate;
+  margin-top: 5px;
 }
 
 table th {
@@ -108,4 +114,5 @@ table th {
 
 table td {
   text-align: center;
+  padding: 1px 1px 1px 1px;
 }

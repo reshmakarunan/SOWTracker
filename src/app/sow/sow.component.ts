@@ -69,7 +69,7 @@ export class SOWComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.isAuthor=JSON.parse(sessionStorage.getItem('author'));
+    this.isAuthor = JSON.parse(sessionStorage.getItem('author'));
     await this.GetDropdown1();
     await this.GetDropdown2();
     await this.GetDropdown3();
@@ -141,7 +141,7 @@ export class SOWComponent implements OnInit {
       })
     })
   }
-  
+
   GetDropdown3() {
     return new Promise((res, rej) => {
       this.recruiterService.GetAllRecruiterData().subscribe(result => {

@@ -26,12 +26,14 @@ export class DomainComponent implements OnInit {
   isBatchSearch: boolean;
   searchText: any;
   batchFilteredRecord: any;
+  rowCount: Number;
+
   constructor(private service: DomainService, private excelService: ExcelService, private loginservice: LoginService) {
     //this.isAuthor = this.loginservice.isAuthor;
   }
 
   ngOnInit(): void {
-    this.isAuthor=JSON.parse(sessionStorage.getItem('author'));
+    this.isAuthor = JSON.parse(sessionStorage.getItem('author'));
     this.GetAllDomainData();
   }
 
@@ -45,6 +47,7 @@ export class DomainComponent implements OnInit {
     this.resultloader = true;
     this.service.GetAllDomainData().subscribe(data => {
       this.DomainList = data;
+      this.rowCount = this.DomainList.length;
       this.resultloader = false;
       this.totalPages = Math.ceil(this.DomainList.length / this.pageSizeSelected);
       this.GetDomainDetails();

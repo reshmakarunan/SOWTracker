@@ -21,11 +21,6 @@ export class CandidatemappingComponent implements OnInit {
   batchFilteredRecord: any;
   searchText: any;
   isBatchSearch: boolean;
-
-  constructor(private service: CandidatemappingService, private candidateService: CandidateService, private sowService: SOWService,
-    private statusService: StatusserviceService, private excelService: ExcelService, private login: LoginService) {
-  }
-
   isAuthor: boolean = false;
   MappingsList: any = [];
   submitted: boolean = false;
@@ -42,11 +37,16 @@ export class CandidatemappingComponent implements OnInit {
   CandidateData: CandidateModel[] = [];
   StatusData: StatusModel[] = [];
 
+  constructor(private service: CandidatemappingService, private candidateService: CandidateService, private sowService: SOWService,
+    private statusService: StatusserviceService, private excelService: ExcelService,
+    private login: LoginService) {
+  }
+
   async ngOnInit() {
-    this.isAuthor=JSON.parse(sessionStorage.getItem('author'));
     await this.GetDropdown1();
     await this.GetDropdown2();
     await this.GetDropdown3();
+    this.isAuthor = JSON.parse(sessionStorage.getItem('author'));
     this.GetMappingsData();
   }
 
@@ -126,6 +126,17 @@ export class CandidatemappingComponent implements OnInit {
     if (this.mapppingForm.invalid) {
       return;
     }
+
+    let formValue = this.mapppingForm.value;
+    if (formValue != null) {
+      let sowId = formValue.sowId;
+      let candidateId = formValue.candidateId;
+      var result = this.MappingData.find(item => item.sowId == sowId && item.candidateId == candidateId);
+      if (result != null) {
+        return alert('Duplicate record');
+      }
+    }
+
     if (this.editmode) {
       this.onEdit();
     }

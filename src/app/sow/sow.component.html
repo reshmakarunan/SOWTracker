@@ -12,9 +12,8 @@
     <div class="container tbl-container">
         <div class="row tbl-fixed">
 
-            <table class="table-striped table-condensed table-fixed" *ngIf="isAuthor">
+            <table class="table-striped table-condensed table-fixed">
                 <thead>
-                    <!-- <th style="border: 1px solid;">Region</th> -->
                     <th style="border: 1px solid;">SO Name</th>
                     <th style="border: 1px solid;">JR</th>
                     <th style="border: 1px solid;">Req Creation Date</th>
@@ -35,13 +34,13 @@
                     <th style="border: 1px solid;">AM</th>
                     <th style="border: 1px solid;">External Resource</th>
                     <th style="border: 1px solid;">Internal Resource</th>
-                    <th style="border: 1px solid;">Actions</th>
+                    <th style="border: 1px solid;" *ngIf="isAuthor">Actions</th>
                 </thead>
                 <tbody>
                     <tr *ngFor="let data of batchRecord">
                         <td style="border: 1px solid;">{{data.soName}}</td>
                         <td style="border: 1px solid;">{{data.jrCode}}</td>
-                        <td style="border: 1px solid;">{{data.requestCreationDate}}</td>
+                        <td style="border: 1px solid;">{{data.requestCreationDate | date: 'MM/dd/yyyy'}}</td>
                         <td style="border: 1px solid;">{{data.accountName}}</td>
                         <td style="border: 1px solid;">{{data.technologyName}}</td>
                         <td style="border: 1px solid;">{{data.role}}</td>
@@ -59,7 +58,7 @@
                         <td style="border: 1px solid;">{{data.accountManager}}</td>
                         <td style="border: 1px solid;">{{data.externalResource}}</td>
                         <td style="border: 1px solid;">{{data.internalResource}}</td>
-                        <td style="border: 1px solid;">
+                        <td style="border: 1px solid;" *ngIf="isAuthor">
                             <button (click)="editDetails(data)"><img src="../../assets/icons/edit.ico"
                                     class="icons"></button> &nbsp;
                             <button (click)="deleteDetails(data)"><img src="../../assets/icons/delete.png"
@@ -68,57 +67,8 @@
                     </tr>
                 </tbody>
             </table>
-            <table class="table-striped table-condensed table-fixed" *ngIf="!isAuthor">
-                <thead>
-                    <!-- <th style="border: 1px solid;">Region</th> -->
-                    <th style="border: 1px solid;">SO Name</th>
-                    <th style="border: 1px solid;">JR</th>
-                    <th style="border: 1px solid;">Req Creation Date</th>
-                    <th style="border: 1px solid;">Account</th>
-                    <th style="border: 1px solid;">Technology</th>
-                    <th style="border: 1px solid;">Role Details</th>
-                    <th style="border: 1px solid;">Region</th>
-                    <th style="border: 1px solid;">Location</th>
-                    <th style="border: 1px solid;">Target Open Positions</th>
-                    <th style="border: 1px solid;">Positions to be closed</th>
-                    <th style="border: 1px solid;">UST POC</th>
-                    <th style="border: 1px solid;">Recruiter</th>
-                    <th style="border: 1px solid;">UST TPM</th>
-                    <th style="border: 1px solid;">Dell Manager</th>
-                    <th style="border: 1px solid;">Status</th>
-                    <th style="border: 1px solid;">Band</th>
-                    <th style="border: 1px solid;">Project Id</th>
-                    <th style="border: 1px solid;">AM</th>
-                    <th style="border: 1px solid;">External Resource</th>
-                    <th style="border: 1px solid;">Internal Resource</th>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let data of batchRecord">
-                        <td style="border: 1px solid;">{{data.soName}}</td>
-                        <td style="border: 1px solid;">{{data.jrCode}}</td>
-                        <td style="border: 1px solid;">{{data.requestCreationDate}}</td>
-                        <td style="border: 1px solid;">{{data.accountName}}</td>
-                        <td style="border: 1px solid;">{{data.technologyName}}</td>
-                        <td style="border: 1px solid;">{{data.role}}</td>
-                        <td style="border: 1px solid;">{{data.region}}</td>
-                        <td style="border: 1px solid;">{{data.location}}</td>
-                        <td style="border: 1px solid;">{{data.targetOpenPositions}}</td>
-                        <td style="border: 1px solid;">{{data.positionsTobeClosed}}</td>
-                        <td style="border: 1px solid;">{{data.ustpocName}}</td>
-                        <td style="border: 1px solid;">{{data.recruiterName}}</td>
-                        <td style="border: 1px solid;">{{data.usttpmName}}</td>
-                        <td style="border: 1px solid;">{{data.dellManagerName}}</td>
-                        <td style="border: 1px solid;">{{data.statusName}}</td>
-                        <td style="border: 1px solid;">{{data.band}}</td>
-                        <td style="border: 1px solid;">{{data.projectId}}</td>
-                        <td style="border: 1px solid;">{{data.accountManager}}</td>
-                        <td style="border: 1px solid;">{{data.externalResource}}</td>
-                        <td style="border: 1px solid;">{{data.internalResource}}</td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
-        <p>Row Count:{{rowCount}}</p>
+        <p>Row Count: {{rowCount}}</p>
         <div class="row justify-content-center" style="margin-top: 10px;">
             <nav>
                 <ul class="pagination justify-content-center">

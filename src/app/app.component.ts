@@ -8,10 +8,10 @@ import { Component } from '@angular/core';
 
 export class AppComponent {
   title = 'CandidateProfiles';
-  headerEvent:boolean=true;
+  headerEvent: boolean = true;
 
-  update(event:any){
-    this.headerEvent=event;
+  update(event: any) {
+    this.headerEvent = event;
   }
 }
 
