@@ -38,15 +38,15 @@
             </div>
             <table class="table table-fixed" >
                 <thead>
-                    <th style="border: 1px solid;">Domain Id</th>
-                    <th style="border: 1px solid;">Domain Name</th>
-                    <th style="border: 1px solid;" *ngIf="isAuthor">Actions</th>
+                    <th class="tableborder">Domain Id</th>
+                    <th class="tableborder">Domain Name</th>
+                    <th class="tableborder" *ngIf="isAuthor">Actions</th>
                 </thead>
                 <tbody>
                     <tr *ngFor="let domain of batchRecord">
-                        <td style="border: 1px solid;">{{domain.domainId}}</td>
-                        <td style="border: 1px solid;">{{domain.domainName}}</td>
-                        <td style="border: 1px solid;" *ngIf="isAuthor">
+                        <td class="tableborder">{{domain.domainId}}</td>
+                        <td class="tableborder">{{domain.domainName}}</td>
+                        <td class="tableborder" *ngIf="isAuthor">
                             <button (click)="editDetails(domain)"><img src="../../assets/icons/edit.ico"
                                     class="icons"></button> &nbsp;
                         </td>

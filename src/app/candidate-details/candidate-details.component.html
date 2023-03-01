@@ -17,37 +17,37 @@
             <div class="result-loader" *ngIf="resultloader">
                 <div class="loading-image"></div>
             </div>
-            <table class=" table-striped table-condensed table-fixed">
+            <table class="table-striped table-condensed table-fixed">
                 <thead>
-                    <th style="border: 1px solid;">Employee Name</th>
-                    <th style="border: 1px solid;">DOB</th>
-                    <th style="border: 1px solid;">Phone</th>
-                    <th style="border: 1px solid;">Email Id</th>
-                    <th style="border: 1px solid;">Gender</th>
-                    <th style="border: 1px solid;">Skills</th>
-                    <th style="border: 1px solid;">Joining Date</th>
-                    <th style="border: 1px solid;">Location</th>
-                    <th style="border: 1px solid;">Address</th>
-                    <th style="border: 1px solid;">Pincode</th>
-                    <th style="border: 1px solid;">Status</th>
-                    <th style="border: 1px solid;">IsInternal</th>
-                    <th style="border: 1px solid;" *ngIf="isAuthor">Actions</th>
+                    <th class="tableborder">Employee Name</th>
+                    <th class="tableborder">DOB</th>
+                    <th class="tableborder">Phone</th>
+                    <th class="tableborder">Email Id</th>
+                    <th class="tableborder">Gender</th>
+                    <th class="tableborder">Skills</th>
+                    <th class="tableborder">Joining Date</th>
+                    <th class="tableborder">Location</th>
+                    <th class="tableborder">Address</th>
+                    <th class="tableborder">Pincode</th>
+                    <th class="tableborder">Status</th>
+                    <th class="tableborder">IsInternal</th>
+                    <th class="tableborder" *ngIf="isAuthor">Actions</th>
                 </thead>
                 <tbody>
                     <tr *ngFor="let candidate of batchRecord">
-                        <td style="border: 1px solid;">{{candidate.candidateName}}</td>
-                        <td style="border: 1px solid;">{{candidate.dob | date: 'MM/dd/yyyy'}}</td>
-                        <td style="border: 1px solid;">{{candidate.mobileNo}}</td>
-                        <td style="border: 1px solid;">{{candidate.email}}</td>
-                        <td style="border: 1px solid;">{{candidate.gender}}</td>
-                        <td style="border: 1px solid;">{{candidate.skills}}</td>
-                        <td style="border: 1px solid;">{{candidate.joiningDate | date: 'MM/dd/yyyy'}}</td>
-                        <td style="border: 1px solid;">{{candidate.location}}</td>
-                        <td style="border: 1px solid;">{{candidate.address}}</td>
-                        <td style="border: 1px solid;">{{candidate.pincode}}</td>
-                        <td style="border: 1px solid;">{{candidate.status}}</td>
-                        <td style="border: 1px solid;">{{candidate.isInternal?'Yes':'No'}}</td>
-                        <td style="border: 1px solid;" *ngIf="isAuthor">
+                        <td class="tableborder">{{candidate.candidateName}}</td>
+                        <td class="tableborder">{{candidate.dob | date: 'MM/dd/yyyy'}}</td>
+                        <td class="tableborder">{{candidate.mobileNo}}</td>
+                        <td class="tableborder">{{candidate.email}}</td>
+                        <td class="tableborder">{{candidate.gender}}</td>
+                        <td class="tableborder">{{candidate.skills}}</td>
+                        <td class="tableborder">{{candidate.joiningDate | date: 'MM/dd/yyyy'}}</td>
+                        <td class="tableborder">{{candidate.location}}</td>
+                        <td class="tableborder">{{candidate.address}}</td>
+                        <td class="tableborder">{{candidate.pincode}}</td>
+                        <td class="tableborder">{{candidate.status}}</td>
+                        <td class="tableborder">{{candidate.isInternal?'Yes':'No'}}</td>
+                        <td class="tableborder" *ngIf="isAuthor">
                             <button (click)="editDetails(candidate)"><img src="../../assets/icons/edit.ico"
                                     class="icons"></button> &nbsp;
                             <button (click)="deleteDetails(candidate)"><img src="../../assets/icons/delete.png"

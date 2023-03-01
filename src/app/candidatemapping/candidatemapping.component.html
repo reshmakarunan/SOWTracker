@@ -71,17 +71,17 @@
             </div>
             <table class="table table-fixed">
                 <thead>
-                    <th style="border: 1px solid;">SO Name</th>
-                    <th style="border: 1px solid;">Candidate Name</th>
-                    <th style="border: 1px solid;">Status</th>
-                    <th style="border: 1px solid;" *ngIf="isAuthor">Actions</th>
+                    <th class="tableborder">SO Name</th>
+                    <th class="tableborder">Candidate Name</th>
+                    <th class="tableborder">Status</th>
+                    <th class="tableborder" *ngIf="isAuthor">Actions</th>
                 </thead>
                 <tbody *ngIf="MappingData">
                     <tr *ngFor="let map of batchRecord">
-                        <td style="border: 1px solid;">{{map.soName}}</td>
-                        <td style="border: 1px solid;">{{map.candidateName}}</td>
-                        <td style="border: 1px solid;">{{map.statusName}}</td>
-                        <td style="border: 1px solid;" *ngIf="isAuthor">
+                        <td class="tableborder">{{map.soName}}</td>
+                        <td class="tableborder">{{map.candidateName}}</td>
+                        <td class="tableborder">{{map.statusName}}</td>
+                        <td class="tableborder" *ngIf="isAuthor">
                             <button (click)="editDetails(map)"><img src="../../assets/icons/edit.ico"
                                     class="icons"></button> &nbsp;
                             <button (click)="deleteDetails(map)"><img src="../../assets/icons/delete.png"

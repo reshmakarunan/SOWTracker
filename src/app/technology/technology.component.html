@@ -47,17 +47,17 @@
         <div class="row tbl-fixed">
             <table class="table table-fixed">
                 <thead>
-                    <th style="border: 1px solid;">Technology Id</th>
-                    <th style="border: 1px solid;">Technology Name</th>
-                    <th style="border: 1px solid;">Domain</th>
-                    <th style="border: 1px solid;" *ngIf="isAuthor">Actions</th>
+                    <th class="tableborder">Technology Id</th>
+                    <th class="tableborder">Technology Name</th>
+                    <th class="tableborder">Domain</th>
+                    <th class="tableborder" *ngIf="isAuthor">Actions</th>
                 </thead>
                 <tbody>
                     <tr *ngFor="let tech of batchRecord">
-                        <td style="border: 1px solid;">{{tech.technologyId}}</td>
-                        <td style="border: 1px solid;">{{tech.technologyName}}</td>
-                        <td style="border: 1px solid;">{{tech.domainName}}</td>
-                        <td style="border: 1px solid;" *ngIf="isAuthor">
+                        <td class="tableborder">{{tech.technologyId}}</td>
+                        <td class="tableborder">{{tech.technologyName}}</td>
+                        <td class="tableborder">{{tech.domainName}}</td>
+                        <td class="tableborder" *ngIf="isAuthor">
                             <button (click)="editDetails(tech)"><img src="../../assets/icons/edit.ico"
                                     class="icons"></button> &nbsp;
                         </td>
